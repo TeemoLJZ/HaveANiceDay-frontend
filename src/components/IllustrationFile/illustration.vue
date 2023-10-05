@@ -28,17 +28,27 @@
                 v-for="(o) in 4"
                 :key="o"
                 :span="6"
-              >
-                <el-card :body-style="{ padding: '0px' }">
-                  <img
-                    src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
+              >              
+                <el-card 
+                :body-style="{ padding: '0px' }"
+                v-for="illu in illulist"
+                :key = "illu"
+                >
+                  <!-- 没有对象存储服务器本地无法展示图片 
+                    <img
+                    :src=illu.illu
                     class="image"
-                  />
-                  <div style="padding: 14px">
-                    <span>Yummy hamburger</span>
+                  /> -->
+                  <!-- 暂时固定一个图片 -->
+                  <img
+                    src="../../assets/3.jpeg"
+                    class="image"
+                  /> 
+                  <div style="padding: 14px;background: #F5F7FA;">
+                    <span>{{ illu.name }}</span>
                     <div class="bottom" >
-                      <div class="describe">describe</div>
-                      <el-button text class="button">Operating</el-button>
+                      <div class="describe">{{illu.desc}}</div>
+                      <el-button type="success" class="button">See more</el-button>
                     </div>
                   </div>
                 </el-card>
@@ -57,6 +67,7 @@
 <script>
 import HeaderforPage from '../common/Header.vue'
 import FooterforPage from '../common/Footer.vue'
+import {listillus} from '../../api/api'
 export default {
   name: 'illustrationPage',
   props: {
@@ -78,10 +89,37 @@ export default {
           {
             url: require('../../assets/3.jpeg')
           }
-      ]
+      ],
+      illulist: null
     }
+  },
+  methods:{
+    // 获取首页插画信息
+    getillu(){
+      listillus()
+      .then(response=>{
+        if(response.data.ret == 0){
+          this.illulist = response.data.retlist
+          console.log(this.illulist)
+        }
+        else{
+          this.$message({
+            message: "something is wrong",
+            type:"error"
+          })
+        }
+    }
+    )
+    .catch(error=>{
+      console.log(error)
+    })
+    }
+},
+  created(){
+    this.getillu()
   }
 }
+
 
 </script>
 

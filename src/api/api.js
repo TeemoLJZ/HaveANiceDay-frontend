@@ -1,5 +1,6 @@
 import service from "../service";
 
+// 登录接口
 export function login(data){
   return service({
     method:'post',
@@ -11,6 +12,7 @@ export function login(data){
   })
 }
 
+//获取客户列表
 export function listcustomers(){
   return service({
     method:'get',
@@ -18,6 +20,7 @@ export function listcustomers(){
   })
 }
 
+//获取插画列表
 export function listillus(){
   return service({
     method:'get',
