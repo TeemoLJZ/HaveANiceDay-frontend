@@ -1,59 +1,80 @@
 <template>
-  <div class="detail">
-    <el-container>
-      <el-header>
-        <HeaderforPage/>
-      </el-header>
-      <el-main>
-        <div class="main-details">
-          <BreadCrumb/>
-          <div class="main-content">
-            <div class="image">
-              <img src='../img/details.png' style="width:100%; height:100%;">
-            </div>
-            <div class="details">
-              <div class="content">
-                <div class="title">For You-1</div>
-                <div class="author">阮小山</div>
-                <div class="description">I have two sweet lemons in my bag for you.</div>
-              </div>
-              <div class="tags">
-                <el-tag  effect="plain" type="warning" round>photography</el-tag>
-                <el-tag  effect="plain" type="warning" round style="margin-left:8px">store</el-tag>
-              </div>
-            <el-divider />
-            <div class="sug-input">
-              <span class="question">What do you want to say when you see this illustration?</span>
-              <el-input
-                v-model="textarea"
-                :rows="4"
-                type="textarea"
-                placeholder="Please input"
-                class="input-area"
-              />
-              <div class="submit-area">
-                <el-button type="success" style="background: #30E19D;">save</el-button>
-                <el-button  link style="margin-left:16px;" type="success">Find out what more people think about this illustration.</el-button>
-              </div>
-            </div>
-            </div>
-          </div>
+  <div class="detail">        
+    <BreadCrumb/>
+    <div class="main-content">
+      <div class="image">
+        <img src='../img/details.png' style="width:100%; height:100%;">
+      </div>
+      <div class="details">
+        <div class="content" v-for="details in illDetails" :key="details" >
+          <div class="title">{{ details.name }}</div>
+          <div class="author">{{ details.author }}</div>
+          <div class="description">{{ details.desc }}</div>
         </div>
-      </el-main>
-    </el-container>
+        <div class="tags">
+          <el-tag  effect="plain" type="warning" round>photography</el-tag>
+          <el-tag  effect="plain" type="warning" round style="margin-left:8px">store</el-tag>
+        </div>
+      <el-divider />
+      <div class="sug-input">
+        <span class="question">What do you want to say when you see this illustration?</span>
+        <el-input
+          v-model="textarea"
+          :rows="4"
+          type="textarea"
+          placeholder="Please input"
+          class="input-area"
+        />
+        <div class="submit-area">
+          <el-button type="success" style="background: #30E19D;">save</el-button>
+          <el-button  link style="margin-left:16px;" type="success">Find out what more people think about this illustration.</el-button>
+        </div>
+      </div>
+      </div>
+    </div>       
   </div>
 </template>
 
 <script>
-import HeaderforPage from '@/components/common/Header'
 import BreadCrumb from '@/components/common/BreadCrumb'
+import {listillus} from '../../api/api'
 export default {
   name: 'detailPage',
-  props: {
-    msg: String
+  data(){
+    return{
+      id:this.$route.params.id,
+      illDetails:[],
+      test:{
+        name:111,
+        years:222
+      }
+    }
+  },
+  methods:{
+    getilludetails(){
+      listillus(this.id)
+      .then(response=>{
+        if(response.data.ret == 0){
+          this.illDetails = response.data.retlist
+          console.log(this.illDetails)
+        }
+        else{
+          this.$message({
+            message: "something is wrong",
+            type:"error"
+          })
+        }
+    }
+    )
+    .catch(error=>{
+      console.log(error)
+    })
+    },
+  },
+  created(){
+    this.getilludetails()
   },
   components:{
-    HeaderforPage,
     BreadCrumb,
   }
 }
@@ -63,14 +84,8 @@ export default {
 // .el-link .el-icon--right.el-icon {
 //   vertical-align: text-bottom;
 // }
-.detail{
-  .main-details{
-  position: absolute;
-  // left: 260px;
-  top: 58px;
-  width: 1200px;
-  // height: 1080px;
 
+.detail{
     .main-content{
       display: flex;
       flex-direction: row;
@@ -149,6 +164,5 @@ export default {
         }
       }   
     }
-}
 }
 </style>

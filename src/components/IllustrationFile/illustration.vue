@@ -1,10 +1,5 @@
 <template>
   <div class="Illustration">
-    <el-container>
-      <el-header>
-        <HeaderforPage/> 
-      </el-header>
-      <el-main>
         <div style="text-align: center;font-size: 28px;font-family: Source Han Sans CN;margin-bottom: 32px;">
           Four Seasons of Cats
         </div>
@@ -41,14 +36,14 @@
                   /> -->
                   <!-- 暂时固定一个图片 -->
                   <img
-                    src="../../assets/3.jpeg"
+                    src="../img/details.png"
                     class="image"
                   /> 
                   <div style="padding: 14px;background: #F5F7FA;">
-                    <span>{{ illu.name }}</span>
+                    <span >{{ illu.name }}</span>
                     <div class="bottom" >
                       <div class="describe">{{illu.desc}}</div>
-                      <el-button type="success" class="button">See more</el-button>
+                      <el-button  type="success"  class="button" @click="goToDetailPage(illu.id)">See more</el-button>
                     </div>
                   </div>
                 </el-card>
@@ -56,27 +51,17 @@
             </el-row>
           </div>
       </div>
-      </el-main>
-      <el-footer>
-        <FooterforPage/>
-      </el-footer>
-    </el-container>
   </div>
 </template>
 
 <script>
-import HeaderforPage from '../common/Header.vue'
-import FooterforPage from '../common/Footer.vue'
 import {listillus} from '../../api/api'
 export default {
   name: 'illustrationPage',
   props: {
     msg: String
   },
-  components:{
-    HeaderforPage,
-    FooterforPage
-  },
+
   data(){
     return{
       imag:[
@@ -113,14 +98,20 @@ export default {
     .catch(error=>{
       console.log(error)
     })
+    },
+    goToDetailPage(id){
+      this.$router.push({
+        name:'details',
+        params:{
+          id:id
+        }
+      })
     }
 },
   created(){
     this.getillu()
   }
 }
-
-
 </script>
 
 <style lang="scss" scoped>
@@ -128,8 +119,9 @@ export default {
   .hot-model{
     .hot-pic{
       .image {
-      width: 100%;
+      width: 80%;
       display: block;
+      text-align: center;
       }
       .bottom {
         margin-top: 13px;

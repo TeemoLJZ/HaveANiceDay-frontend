@@ -1,6 +1,6 @@
 <template>
   <div class="Footer">
-    <div>Footer</div>
+    <div style="text-align: center;">@Whater Studio in 2023</div>
   </div>
 </template>
 

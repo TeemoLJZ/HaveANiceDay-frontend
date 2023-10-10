@@ -19,13 +19,14 @@ const router = createRouter({
     {
       path:'/illustration',
       name:'illustration',
-      component:()=>import('../components/IllustrationFile/illustration.vue'),
-      children:[
-        {
-          path:'details',
-          name:'detailPage',
-          component:()=>import('../components/IllustrationFile/detail.vue')
-        }
+      component:()=>import('../components/IllustrationFile/illustration'),
+      children:
+      [
+        // {
+        //   path:'/illustration/details',
+        //   name:'detailPage',
+        //   component:()=>import('../components/IllustrationFile/detail.vue')
+        // }
       ]
     },
     { 
@@ -39,7 +40,7 @@ const router = createRouter({
       component:()=>import('../components/AboutPage.vue')
     },
     { 
-      path: '/details',
+      path: '/details/:id',
       name: 'details',
       component:()=>import('../components/IllustrationFile/detail.vue')
     },

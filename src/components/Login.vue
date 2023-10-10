@@ -1,32 +1,34 @@
 <template>
-  <div class="Login">
-    <el-card class="login-card">
-      <div style="text-align:center;margin: 10px">
-        <span style="font-size:20px;">欢迎使用</span>
-      </div>
-      <div class="login-aera" style="text-align:center">
-        <el-form
-        ref="formLabelAlign"
-        :model="formLabelAlign"
-        status-icon
-        :rules="rules"
-        label-width="120px"
-        class="demo-ruleForm"
-        >
-        <el-form-item label="用户名" prop="username">
-          <br/>
-          <el-input v-model="formLabelAlign.username" />
-        </el-form-item>
-        <el-form-item label="密码" prop="password">
-          <br/>
-          <el-input v-model="formLabelAlign.password" />
-        </el-form-item>
-      <el-form-item class="Loginbutton" style="text-align:center">
-        <el-button  type="primary" @click="login" >登录</el-button>
-      </el-form-item>  
-      </el-form>
-      </div>
-  </el-card>
+  <div class="login">
+    <a href="target"></a>
+    <img src="../assets/login-back.png" alt="" class="back"> 
+    <div class="login-block">
+      <img src="../assets/login-title.png" alt="" class="title">  
+      <el-card class="login-card" id="logincard">
+        <div class="login-aera" style="text-align:center">
+          <el-form
+          ref="formLabelAlign"
+          :model="formLabelAlign"
+          status-icon
+          :rules="rules"
+          label-width="120px"
+          class="demo-ruleForm"
+          label-position="top"
+          size="large"
+          >
+          <el-form-item label="User Name" prop="username">
+            <el-input v-model="formLabelAlign.username" />
+          </el-form-item>
+          <el-form-item label="Password" prop="password">
+            <el-input v-model="formLabelAlign.password" />
+          </el-form-item>
+        <el-form-item class="Loginbutton">
+          <el-button  type="success" @click="login"  style="width:100%">Login</el-button>
+        </el-form-item>  
+        </el-form>
+        </div>
+      </el-card>
+    </div>  
   </div>
 </template>
 
@@ -34,6 +36,7 @@
 import {nameRule, passRule } from '../utils/validate.js'
 import {setToken} from '../utils/setToken'
 import {login} from '../api/api.js'
+
 export default {
   name: 'Login',
   props: {
@@ -109,7 +112,7 @@ export default {
             if(response.data.ret == 0){
               setToken('username',response.data.username)
               setToken('token',response.data.token)
-              this.$router.push({path:'/index'}),
+              this.$router.push({path:'/illustration'}),
               this.$message({
                 message:response.data.msg,
                 type:'success'
@@ -129,15 +132,55 @@ export default {
           console.log(this.formLabelAlign)
         }
       })
-    }
-  }
+    },
+    // 页面加载滚动
+    // getLogin(){
+    //   window.scrollTo({
+    //     top: 100,
+    //     left:230,
+    //     behavior:'smooth'
+    //   })
+    // }
+  },
 }
 </script>
 
-<style>
-.login-card{
-  width: 400px;
-  margin: 0 auto;
-  margin-top: 200px;
+<style lang="scss" scoped>
+.login{
+  .back{
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    opacity: 1;
+  }
+  .login-block{
+    position: absolute;
+    z-index: 1;
+    left: 36%;
+    top: 30%;
+
+    .title{
+    width: 400px;
+    height: 60px;
+    opacity: 1;    
+  }
+  .login-card{
+/* 矩形 6 */
+    width: 364px;
+    height: 304px;
+    border-radius: 8px;
+    opacity: 1;
+      
+    background: #FFFFFF;
+      
+    box-shadow: 0px 5px 10px 5px rgba(61, 61, 61, 0.11);
+    
+
 }
+  }
+
+  
+}
+
 </style>
