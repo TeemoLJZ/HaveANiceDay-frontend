@@ -36,13 +36,13 @@
       <el-table-column prop="phone" label="电话" width="180" />
       <el-table-column prop="address" label="地址" />
       <el-table-column fixed="right" label="操作" width="120">
-        <template #default>
-        <el-button link type="primary" size="small" @click="handleClick"
+        <template #default="scope">
+        <el-button link type="primary" size="small" @click="editCustomer(scope.row)"
           >修改</el-button>
       </template>
       </el-table-column>
     </el-table>
-    <el-dialog v-model="dialogFormVisible" title="新增">
+    <el-dialog v-model="dialogFormVisible" :title="state? '添加' : '修改'">
       <el-form :model="addform">
       <el-form-item label="姓名" :label-width="formLabelWidth" prop="name">
         <el-input v-model="addform.name" autocomplete="off" />
@@ -57,64 +57,150 @@
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="dialogFormVisible = false">Cancel</el-button>
-        <el-button type="primary" @click="addcustomer" >
+        <el-button type="primary" @click="confirmEdit" >
           Confirm
         </el-button>
       </span>
     </template>
   </el-dialog>
     </div>
+    <el-pagination
+      v-model:current-page="currentPage"
+      v-model:page-size="pageSize"
+      :small="small"
+      :disabled="disabled"
+      :background="background"
+      layout="prev, pager, next, jumper"
+      :total="total"
+      @size-change="handleSizeChange"
+      @current-change="listCustomers"
+    />
+    <!-- paging组件暂时封装不成功，因为接口设计的原因，表格组件无法封装 -->
+    <!-- <Paging :total="total" :pageSize="pageSize"/>  -->
   </div>
 </template>
 
 <script>
-import axios from "axios"
-import { listcustomers } from "@/api/api"
+import { listcustomers,addCustomers,modifyCustomers} from "@/api/api"
+import { ElMessage } from 'element-plus'
+import Paging from './common/paging.vue'
 export default {
   name: 'casesPage',
+  components:{
+    Paging
+  },
   data(){
     return{
       customerlist:[],
       addform:{
+        id:'',
         name:'',
         phone:'',
         address:'',
-    },
-    dialogFormVisible: false,
+      },
+      dialogFormVisible: false,
+      currentPage:2,
+      pageSize:5,
+      total:0,
+      state: true
   }
 },
+  props:{
+    
+  },
   mounted()
   {
-      listcustomers()
+      this.listCustomers()
+  },
+  methods:{
+    listCustomers(){
+      listcustomers('list_customer',this.pageSize,this.currentPage)
       .then(response => (
-        this.customerlist= response.data.retlist
+        this.customerlist= response.data.retlist,
+        this.total = response.data.total
       ))
       .catch(error => {
         console.log(error)
       })
-  },
-  methods:{
-    addcustomer() {
-      axios
-        .post('/mgr/customers/', {
-          action: 'add_customer',
-          data:{
-            name:this.addform.name,
-            phone:this.addform.phone,
-            address:this.addform.address,
-          }
+    },
+    // 接口封装前addcustomer
+    //addcustomer() {
+    //   axios
+    //     .post('/mgr/customers/', {
+    //       action: 'add_customer',
+    //       data:{
+    //         name:this.addform.name,
+    //         phone:this.addform.phone,
+    //         address:this.addform.address,
+    //       }
+    //     })
+    //     .then(response => {
+    //       this.dialogFormVisible = false
+    //       this.$message({
+    //         message: '添加成功',
+    //         type: 'success'
+    //       })
+    //     })
+    //     .catch(error => {
+    //       console.log(error)
+    //     })
+    // },
+    addcustomer(){
+      this.state = true
+      this.addform={
+        id:'',
+        name:'',
+        phone:'',
+        address:'',
+      }
+    },
+    editCustomer(row){
+      console.log(row)
+      this.addform = row
+      this.state = false
+      this.dialogFormVisible = true
+
+    },
+    confirmEdit(){
+      if(this.state){
+        addCustomers(
+        this.addform.name,
+        this.addform.phone,
+        this.addform.address
+      )
+      .then(response => {
+        this.dialogFormVisible = false
+        ElMessage({
+          message: '添加成功',
+          type: 'success'
         })
-        .then(response => {
-          this.dialogFormVisible = false
-          this.$message({
-            message: '添加成功',
-            type: 'success'
-          })
+        this.listCustomers()
         })
         .catch(error => {
           console.log(error)
         })
-    }
+      }
+      else{
+        modifyCustomers(
+        this.addform.id,
+        this.addform.name,
+        this.addform.phone,
+        this.addform.address
+      )
+      .then(response => {
+        this.dialogFormVisible = false
+        ElMessage({
+          message: '修改成功',
+          type: 'success'
+        })
+        this.listCustomers()
+        })
+        .catch(error => {
+          console.log(error)
+        })
+      }
+      
+    },
   }
 }
 </script>

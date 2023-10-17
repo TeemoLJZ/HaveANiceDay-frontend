@@ -12,18 +12,60 @@ export function login(data){
   })
 }
 
-//获取客户列表
-export function listcustomers(){
-  return service({
-    method:'get',
-    url:'mgr/customers/?action=list_customer'
-  })
-}
-
 //获取插画列表
 export function listillus(){
   return service({
     method:'get',
     url:'illu/pic/?action=list_illu'
+  })
+}
+
+//以下为练习接口
+
+
+//获取客户信息
+export function listcustomers(action,pagesize,pagenum,keywords){
+  return service({
+    method:'get',
+    url:'mgr/customers/',
+    params:{
+      action,
+      pagesize,
+      pagenum,
+      keywords
+    }
+  })
+}
+
+//新增客户信息
+export function addCustomers(name,phone,address){
+  return service({
+    method:'post',
+    url:'mgr/customers/',
+    data:{
+      action:'add_customer',
+      data:{
+        name,
+        phone,
+        address
+      }
+    }
+  })
+}
+
+//修改客户信息
+export function modifyCustomers(id,name,phone,address){
+  return service({
+    method:'post',
+    url:'mgr/customers/',
+    data:{
+      action:'modify_customer',
+      id,
+      newdata:{
+        name,
+        phone,
+        address
+      }
+    }
   })
 }
