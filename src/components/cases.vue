@@ -31,6 +31,16 @@
   </el-row>
   <div class="customertable">
     <el-button @click="dialogFormVisible = true">新增</el-button>
+    <!-- 关键字查询 -->
+    <el-form :inline="true" :model="formInline" class="demo-form-inline">
+    <el-form-item label="姓名">
+      <el-input v-model="keywords" placeholder="姓名" clearable />
+    </el-form-item>
+    <el-form-item>
+      <el-button type="primary" @click="listCustomers">Query</el-button>
+    </el-form-item>
+  </el-form>
+  <!-- 结束 -->
     <el-table :data="customerlist" style="width: 100%">
       <el-table-column prop="name" label="姓名" width="180" />
       <el-table-column prop="phone" label="电话" width="180" />
@@ -102,19 +112,17 @@ export default {
       currentPage:2,
       pageSize:5,
       total:0,
-      state: true
+      state: true,
+      keywords:''
   }
 },
-  props:{
-    
-  },
   mounted()
   {
       this.listCustomers()
   },
   methods:{
     listCustomers(){
-      listcustomers('list_customer',this.pageSize,this.currentPage)
+      listcustomers('list_customer',this.pageSize,this.currentPage,this.keywords)
       .then(response => (
         this.customerlist= response.data.retlist,
         this.total = response.data.total
