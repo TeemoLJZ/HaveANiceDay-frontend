@@ -42,7 +42,7 @@
                   <div style="padding: 14px;background: #F5F7FA;">
                     <span >{{ illu.name }}</span>
                     <div class="bottom" >
-                      <div class="describe">{{illu.desc}}</div>
+                      <div class="author">{{illu.author_text}}</div>
                       <el-button  type="success"  class="button" @click="goToDetailPage(illu.id)">See more</el-button>
                     </div>
                   </div>
@@ -75,7 +75,7 @@ export default {
             url: require('../../assets/3.jpeg')
           }
       ],
-      illulist: null
+      illulist: []
     }
   },
   methods:{
@@ -86,6 +86,9 @@ export default {
         if(response.data.ret == 0){
           this.illulist = response.data.retlist
           console.log(this.illulist)
+          this.illulist.forEach(item=>{
+            item.author === 'ruanxiaoshan' ? item.author_text = '阮晓山': item.author_text
+          })
         }
         else{
           this.$message({
@@ -130,7 +133,7 @@ export default {
         justify-content: space-between;
         align-items: center;
 
-        .describe {
+        .author {
         font-size: 12px;
         color: #999;
         }

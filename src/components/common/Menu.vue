@@ -1,6 +1,6 @@
 <template>
   <el-menu
-    :default-active="this.$route.path"
+    :default-active="$route.path"
     router
     class="top-menu"
     mode="horizontal"
@@ -9,14 +9,16 @@
     text-color="#30E19D"
     active-text-color="#1D966C"
   >
-    <el-menu-item index="index">
+    <el-menu-item index="/illustration">
       <img src="../../assets/logor.png" alt="logo" style="height: 38px; width:220px; margin: 10px 16px;" />
     </el-menu-item>
     <div class="flex-grow" />
-    <el-menu-item index="illustration">Illustration</el-menu-item>
+    <!-- index前面要加斜杠，不加的话就会在路由后面拼接则跳转失败 -->
+    <el-menu-item index="/illustration">Illustration</el-menu-item>
     <el-menu-item index="">Food</el-menu-item>
     <el-menu-item index="">Plant</el-menu-item>
     <el-menu-item index="">Book</el-menu-item>
+    <el-menu-item index="">Service</el-menu-item>
     <el-menu-item index="">
       <el-avatar
         src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"

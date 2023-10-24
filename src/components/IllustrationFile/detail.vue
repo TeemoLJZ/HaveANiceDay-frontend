@@ -10,6 +10,7 @@
           <div class="title">{{ details.name }}</div>
           <div class="author">{{ details.author }}</div>
           <div class="description">{{ details.desc }}</div>
+          <el-tag  effect="plain" type="warning" round>{{ details.tag}}</el-tag>
         </div>
         <div class="tags">
           <el-tag  effect="plain" type="warning" round>photography</el-tag>
@@ -37,22 +38,18 @@
 
 <script>
 import BreadCrumb from '@/components/common/BreadCrumb'
-import {listillus} from '../../api/api'
+import {getIlluDetails} from '../../api/api'
 export default {
   name: 'detailPage',
   data(){
     return{
       id:this.$route.params.id,
       illDetails:[],
-      test:{
-        name:111,
-        years:222
-      }
     }
   },
   methods:{
     getilludetails(){
-      listillus(this.id)
+      getIlluDetails(this.$route.params.id)
       .then(response=>{
         if(response.data.ret == 0){
           this.illDetails = response.data.retlist

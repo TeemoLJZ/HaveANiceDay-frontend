@@ -20,6 +20,19 @@ export function listillus(){
   })
 }
 
+// 获取插画详情
+export function getIlluDetails(id){
+  return service({
+    method:'get',
+    url:'illu/pic/',
+    params:{
+      action : 'get_illu_details',
+      id
+    }
+
+  })
+}
+
 //以下为练习接口
 
 
