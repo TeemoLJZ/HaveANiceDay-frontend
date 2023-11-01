@@ -29,6 +29,11 @@ const router = createRouter({
         // }
       ]
     },
+    {
+      path:'/pet',
+      name:'pet',
+      component:()=>import('../components/petfile/pet')
+    },
     { 
       path: '/cases',
       name: 'cases',

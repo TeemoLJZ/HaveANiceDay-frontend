@@ -18,7 +18,7 @@
     <el-menu-item index="">Food</el-menu-item>
     <el-menu-item index="">Plant</el-menu-item>
     <el-menu-item index="">Book</el-menu-item>
-    <el-menu-item index="">Service</el-menu-item>
+    <el-menu-item index="/pet">Pet</el-menu-item>
     <el-menu-item index="">
       <el-avatar
         src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
