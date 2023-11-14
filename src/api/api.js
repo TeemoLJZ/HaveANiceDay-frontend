@@ -13,10 +13,14 @@ export function login(data){
 }
 
 //获取插画列表
-export function listillus(){
+export function listillus(pagesize,pagenum){
   return service({
     method:'get',
-    url:'illu/pic/?action=list_illu'
+    url:'illu/pic/?action=list_illu',
+    params:{
+      pagesize,
+      pagenum
+    }
   })
 }
 
@@ -26,7 +30,7 @@ export function getIlluDetails(id){
     method:'get',
     url:'illu/pic/',
     params:{
-      action : 'get_illu_details',
+      action : 'get_illu_detail',
       id
     }
 

@@ -1,6 +1,6 @@
 <template>
   <div class="Illustration">
-        <div style="text-align: center;font-size: 28px;font-family: Source Han Sans CN;margin-bottom: 32px;">
+        <div class="title">
           Four Seasons of Cats
         </div>
         <div class="banner">
@@ -15,40 +15,17 @@
             Follow your favorites
           </div>  
           <div class="hot-pic">
-            <el-row 
-            justify="space-evenly"
-            :gutter="50"
-            >
-              <el-col
-                v-for="(o) in 4"
-                :key="o"
-                :span="6"
-              >              
-                <el-card 
-                :body-style="{ padding: '0px' }"
-                v-for="illu in illulist"
-                :key = "illu"
-                >
-                  <!-- 没有对象存储服务器本地无法展示图片 
-                    <img
-                    :src=illu.illu
-                    class="image"
-                  /> -->
-                  <!-- 暂时固定一个图片 -->
-                  <img
-                    src="../img/details.png"
-                    class="image"
-                  /> 
-                  <div style="padding: 14px;background: #F5F7FA;">
-                    <span >{{ illu.name }}</span>
-                    <div class="bottom" >
-                      <div class="author">{{illu.author_text}}</div>
-                      <el-button  type="success"  class="button" @click="goToDetailPage(illu.id)">See more</el-button>
-                    </div>
-                  </div>
-                </el-card>
-              </el-col>
-            </el-row>
+            <div class="imag-card"  v-for="illu in illulist" :key=illu >
+              <el-image class='image' :src=src fit="cover" />
+              <div class="card-bottom">
+                <div class="name">{{illu.name}}</div>
+                <div class="author">{{illu.author}}</div>
+                <div class="button">
+                  <el-button type="success" size="small" @click="goToDetailPage(illu.id)">see more</el-button>
+                </div>
+              </div>
+              
+            </div>
           </div>
       </div>
   </div>
@@ -75,13 +52,16 @@ export default {
             url: require('../../assets/3.jpeg')
           }
       ],
-      illulist: []
+      src:require("../../assets/1.jpeg"),
+      illulist: [],
+      pagesize:5,
+      pagenum:1
     }
   },
   methods:{
     // 获取首页插画信息
     getillu(){
-      listillus()
+      listillus(this.pagesize,this.pagenum)
       .then(response=>{
         if(response.data.ret == 0){
           this.illulist = response.data.retlist
@@ -119,28 +99,55 @@ export default {
 
 <style lang="scss" scoped>
 .Illustration{
+  .title{
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 32px;
+  }
+  .banner{
+    text-align: center;
+  }
   .hot-model{
+    
+
     .hot-pic{
+      display: flex;
+      flex-direction: row;
+      gap: 40px;
+      justify-content: center;
+      .imag-card{
+        width: 200px;
+        height: 324px;
+      }
       .image {
-      width: 80%;
+      width: 200px;
+      height:220px;
       display: block;
       text-align: center;
+      border-radius: 5px 5px 0px 0px;
       }
-      .bottom {
-        margin-top: 13px;
-        line-height: 12px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-
+      .card-bottom {
+        background: #F5F7FA;
+        border-radius: 0px 0px 5px 5px;
+        position: static;
+        width: 200px;
+        height: 104px;
+        .name{
+          font-size: 16px;
+          line-height: 24px;
+          color: #606266;
+          padding: 8px;
+        }
         .author {
-        font-size: 12px;
-        color: #999;
+          font-size: 12px;
+          color: #909399;
+          padding-left: 8px;
+          line-height: 16px;
         }
         .button {
-        padding: 0;
-        min-height: auto;
-      }
+          margin-left: 116px;
+          margin-top: 14px;
+       }
 
 
       }

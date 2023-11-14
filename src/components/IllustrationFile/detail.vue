@@ -1,20 +1,19 @@
 <template>
   <div class="detail">        
     <BreadCrumb/>
-    <div class="main-content">
+    <div class="main-content" v-for="details in illDetails" :key="details">
       <div class="image">
-        <img src='../img/details.png' style="width:100%; height:100%;">
+        <el-image :src=src style="width:100%;" fit="cover" />
       </div>
       <div class="details">
-        <div class="content" v-for="details in illDetails" :key="details" >
+        <div class="content" >
           <div class="title">{{ details.name }}</div>
           <div class="author">{{ details.author }}</div>
           <div class="description">{{ details.desc }}</div>
-          <el-tag  effect="plain" type="warning" round>{{ details.tag}}</el-tag>
-        </div>
-        <div class="tags">
-          <el-tag  effect="plain" type="warning" round>photography</el-tag>
-          <el-tag  effect="plain" type="warning" round style="margin-left:8px">store</el-tag>
+          <div class="tags">
+            <el-tag  effect="plain" type="warning" round>{{ details.source}} </el-tag>
+            <el-tag  effect="plain" type="warning" round style="margin-left:8px">{{details.feature}}</el-tag>
+          </div>
         </div>
       <el-divider />
       <div class="sug-input">
@@ -45,6 +44,7 @@ export default {
     return{
       id:this.$route.params.id,
       illDetails:[],
+      src: require('../img/details.png')
     }
   },
   methods:{
@@ -88,9 +88,11 @@ export default {
       flex-direction: row;
       justify-content: center;
       
-      .img{
-        width: 486px;
-        height: 604px;
+      .image{
+        width: 384px;
+        height: 500px;
+        // box-shadow: 0px 5px 10px 5px rgba(209, 203, 200, 0.9);
+        border-radius: 8px;
       }
       .details{
         margin-left: 24px;
@@ -132,7 +134,8 @@ export default {
         }
       }
         .tags{
-          margin-top:32px
+          margin-top:16px;
+          margin-left:8px
         }
         .sug-input{
           display: flex;
