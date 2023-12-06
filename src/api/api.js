@@ -13,13 +13,17 @@ export function login(data){
 }
 
 //获取插画列表
-export function listillus(pagesize,pagenum){
+export function listillus(pagesize,pagenum,keywords,source,feature,type){
   return service({
     method:'get',
     url:'illu/pic/?action=list_illu',
     params:{
       pagesize,
-      pagenum
+      pagenum,
+      keywords,
+      source,
+      feature,
+      type
     }
   })
 }

@@ -20,7 +20,7 @@
             <el-input v-model="formLabelAlign.username" />
           </el-form-item>
           <el-form-item label="Password" prop="password">
-            <el-input v-model="formLabelAlign.password" />
+            <el-input v-model="formLabelAlign.password" type="password" show-password/>
           </el-form-item>
         <el-form-item class="Loginbutton">
           <el-button  type="success" @click="login"  style="width:100%">Login</el-button>

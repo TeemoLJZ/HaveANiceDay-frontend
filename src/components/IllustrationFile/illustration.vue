@@ -16,7 +16,7 @@
           </div>  
           <div class="hot-pic">
             <div class="imag-card"  v-for="illu in illulist" :key=illu >
-              <el-image class='image' :src=src fit="cover" />
+              <el-image class='image' :src=illu.src fit="cover" />
               <div class="card-bottom">
                 <div class="name">{{illu.name}}</div>
                 <div class="author">{{illu.author}}</div>
@@ -24,8 +24,10 @@
                   <el-button type="success" size="small" @click="goToDetailPage(illu.id)">see more</el-button>
                 </div>
               </div>
-              
             </div>
+          </div>
+          <div style="text-align:center;margin-top:24px">
+            <el-link type="success" href="/more" >Find other favorites</el-link>
           </div>
       </div>
   </div>
@@ -61,7 +63,7 @@ export default {
   methods:{
     // 获取首页插画信息
     getillu(){
-      listillus(this.pagesize,this.pagenum)
+      listillus(this.pagesize,this.pagenum,'','','','')
       .then(response=>{
         if(response.data.ret == 0){
           this.illulist = response.data.retlist

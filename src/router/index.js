@@ -30,6 +30,16 @@ const router = createRouter({
       ]
     },
     {
+      path:'/more',
+      name:'more',
+      component:()=>import('../components/IllustrationFile/more')
+    },
+    // {
+    //   path:'/more2',
+    //   name:'more',
+    //   component:()=>import('../components/IllustrationFile/more2')
+    // },
+    {
       path:'/pet',
       name:'pet',
       component:()=>import('../components/petfile/pet')

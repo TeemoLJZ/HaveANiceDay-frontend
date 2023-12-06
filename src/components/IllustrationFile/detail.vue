@@ -3,7 +3,7 @@
     <BreadCrumb/>
     <div class="main-content" v-for="details in illDetails" :key="details">
       <div class="image">
-        <el-image :src=src style="width:100%;" fit="cover" />
+        <el-image :src=details.src style="width:100%;" fit="cover" />
       </div>
       <div class="details">
         <div class="content" >
@@ -78,9 +78,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// .el-link .el-icon--right.el-icon {
-//   vertical-align: text-bottom;
-// }
 
 .detail{
     .main-content{
